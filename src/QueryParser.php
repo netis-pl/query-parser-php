@@ -109,7 +109,7 @@ class QueryParser
                 break;
 
             case Token::T_NUMBER:
-                $nodes = $this->createNumber($token->getValue(), $comparisonOperator);
+                $nodes = $this->createNumber($token->getValue(), $boolOperator, $comparisonOperator);
                 break;
 
             case Token::T_PHRASE:
@@ -201,7 +201,7 @@ class QueryParser
 
         switch ($this->stream->getCurrent()->getType()) {
             case Token::T_NUMBER:
-                $lowerNode = $this->createNumber($this->stream->getCurrent()->getValue());
+                $lowerNode = $this->createNumber($this->stream->getCurrent()->getValue(), BoolOperator::OPTIONAL());
                 break;
 
             case Token::T_DATE:
@@ -223,7 +223,7 @@ class QueryParser
 
         switch ($this->stream->getCurrent()->getType()) {
             case Token::T_NUMBER:
-                $upperNode = $this->createNumber($this->stream->getCurrent()->getValue());
+                $upperNode = $this->createNumber($this->stream->getCurrent()->getValue(), BoolOperator::OPTIONAL());
                 break;
 
             case Token::T_DATE:
@@ -460,11 +460,11 @@ class QueryParser
      *
      * @return Numbr
      */
-    protected function createNumber(float $value, ?ComparisonOperator $comparisonOperator = null): Numbr
+    protected function createNumber(float $value, BoolOperator $boolOperator, ?ComparisonOperator $comparisonOperator = null): Numbr
     {
         // move the stream and ignore them if they exist
         $this->getModifiers();
-        return new Numbr($value, $comparisonOperator);
+        return new Numbr($value, $boolOperator, $comparisonOperator);
     }
 
     /**

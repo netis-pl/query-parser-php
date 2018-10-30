@@ -5,6 +5,7 @@ namespace Gdbots\QueryParser\Node;
 
 use Gdbots\QueryParser\Builder\QueryBuilder;
 use Gdbots\QueryParser\Enum\ComparisonOperator;
+use Gdbots\QueryParser\Enum\BoolOperator;
 
 /**
  * Class is intentionally misspelled so it doesn't conflict with PHP7 scalar type hints.
@@ -22,9 +23,9 @@ final class Numbr extends Node
      * @param float              $value
      * @param ComparisonOperator $comparisonOperator
      */
-    public function __construct(float $value, ?ComparisonOperator $comparisonOperator = null)
+    public function __construct(float $value, ?BoolOperator $boolOperator = null, ?ComparisonOperator $comparisonOperator = null)
     {
-        parent::__construct($value, null);
+        parent::__construct($value, $boolOperator);
         $this->comparisonOperator = $comparisonOperator ?: ComparisonOperator::EQ();
     }
 
