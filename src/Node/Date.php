@@ -121,6 +121,9 @@ final class Date extends Node
 
         $date = \DateTime::createFromFormat('!Y-m-d', $this->getValue(), $timeZone ?: self::$utc);
         if (!$date instanceof \DateTime) {
+            $date = \DateTime::createFromFormat('!Y-m-d\TH:i', $this->getValue(), $timeZone ?: self::$utc);
+        }
+        if (!$date instanceof \DateTime) {
             $date = \DateTime::createFromFormat('!Y-m-d', (new \DateTime())->format('Y-m-d'), $timeZone ?: self::$utc);
         }
 
