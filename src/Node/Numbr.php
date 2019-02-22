@@ -39,12 +39,18 @@ final class Numbr extends Node
         $value = isset($data['value']) ? (float)$data['value'] : 0.0;
 
         try {
+            $boolOperator = isset($data['bool_operator']) ? BoolOperator::create($data['bool_operator']) : null;
+        } catch (\Exception $e) {
+            $boolOperator = null;
+        }
+
+        try {
             $comparisonOperator = isset($data['comparison_operator']) ? ComparisonOperator::create($data['comparison_operator']) : null;
         } catch (\Exception $e) {
             $comparisonOperator = null;
         }
 
-        return new self($value, $comparisonOperator);
+        return new self($value, $boolOperator, $comparisonOperator);
     }
 
     /**

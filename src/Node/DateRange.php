@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Gdbots\QueryParser\Node;
 
+use Gdbots\QueryParser\Enum\BoolOperator;
+
 final class DateRange extends Range
 {
     const NODE_TYPE = 'date_range';
@@ -15,9 +17,9 @@ final class DateRange extends Range
      * @param Date $upperNode
      * @param bool $exclusive
      */
-    public function __construct(?Date $lowerNode = null, ?Date $upperNode = null, bool $exclusive = false)
+    public function __construct(?Date $lowerNode = null, ?Date $upperNode = null, bool $exclusive = false, ?BoolOperator $boolOperator = null)
     {
-        parent::__construct($lowerNode, $upperNode, $exclusive);
+        parent::__construct($lowerNode, $upperNode, $exclusive, $boolOperator);
     }
 
     /**

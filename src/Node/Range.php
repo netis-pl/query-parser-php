@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Gdbots\QueryParser\Node;
 
 use Gdbots\QueryParser\Builder\QueryBuilder;
+use Gdbots\QueryParser\Enum\BoolOperator;
 
 abstract class Range extends Node
 {
@@ -28,9 +29,9 @@ abstract class Range extends Node
      *
      * @throws \LogicException
      */
-    public function __construct(?Node $lowerNode = null, ?Node $upperNode = null, bool $exclusive = false)
+    public function __construct(?Node $lowerNode = null, ?Node $upperNode = null, bool $exclusive = false, ?BoolOperator $boolOperator = null)
     {
-        parent::__construct(null);
+        parent::__construct(null, $boolOperator);
         $this->lowerNode = $lowerNode;
         $this->upperNode = $upperNode;
         $this->exclusive = $exclusive;
@@ -50,7 +51,14 @@ abstract class Range extends Node
         $lowerNode = isset($data['lower_node']) ? self::factory($data['lower_node']) : null;
         $upperNode = isset($data['upper_node']) ? self::factory($data['upper_node']) : null;
         $exclusive = isset($data['exclusive']) ? (bool)$data['exclusive'] : false;
-        return new static($lowerNode, $upperNode, $exclusive);
+
+        try {
+            $boolOperator = isset($data['bool_operator']) ? BoolOperator::create($data['bool_operator']) : null;
+        } catch (\Exception $e) {
+            $boolOperator = null;
+        }
+
+        return new static($lowerNode, $upperNode, $exclusive, $boolOperator);
     }
 
     /**

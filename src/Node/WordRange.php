@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Gdbots\QueryParser\Node;
 
+use Gdbots\QueryParser\Enum\BoolOperator;
+
 final class WordRange extends Range
 {
     const NODE_TYPE = 'word_range';
@@ -15,9 +17,9 @@ final class WordRange extends Range
      * @param Word $upperNode
      * @param bool $exclusive
      */
-    public function __construct(?Word $lowerNode = null, ?Word $upperNode = null, bool $exclusive = false)
+    public function __construct(?Word $lowerNode = null, ?Word $upperNode = null, bool $exclusive = false, ?BoolOperator $boolOperator = null)
     {
-        parent::__construct($lowerNode, $upperNode, $exclusive);
+        parent::__construct($lowerNode, $upperNode, $exclusive, $boolOperator);
     }
 
     /**
